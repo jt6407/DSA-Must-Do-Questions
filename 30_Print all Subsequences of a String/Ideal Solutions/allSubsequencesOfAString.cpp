@@ -2,31 +2,38 @@
 using namespace std;
 
 
-void printAllSubsequences(string input, string output){
+void printAllSubsequences(int index,string input,string output, vector<string>& ans){  
 	
 	// Function of print all subsequences of a string
     
-	// if the input string is empty then print the output string
-	
-	if (input.size() == 0 ) {
-		cout << output << endl;
-		return;
+	// base case
+	if(index>=input.size())
+	{
+             ans.push_back(output);	
 	}
-
-	//Print all subsequences that contains the first character of the input
-	printAllSubsequences(input.substr(1), output + input[0]);
-
-	//Print all subsequences that doesn't contain the first character of the input
-	printAllSubsequences(input.substr(1), output);
+		
+	
+	// we are going to use pick and non-pick technique
+	output+=input[index];
+	// picking the character
+	printAllSubsequences(index+1,input,output,ans);
+	
+        outuput-=input[index];
+	// not picking the element
+	printAllSubsequences(index+1,input,output,ans);
+	
 }
 
 int main(){
     
 	string input = "abc";
 	
-	string output = "";    // output string initially empty
+	vector<string>ans;
+	string output="";
 
-	printAllSubsequences(input, output);
+	printAllSubsequences(0,input,output,ans);  // here 0 is the initial index from where the subsequence starts...
+	
+	for(auto &it:ans)cout<<it<<" ";
 
 	return 0;
 }
